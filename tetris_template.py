@@ -40,8 +40,7 @@ class Block(Rectangle):
             Returns True if it can, and False otherwise
             HINT: use the can_move method on the Board object
         '''
-        #YOUR CODE HERE
-        pass
+        return board.can_move(self.x + dx, self.y + dy)
     
     def move(self, dx, dy):
         ''' Parameters: dx - type: int
@@ -118,10 +117,9 @@ class Shape():
             Returns True if all of them can, and False otherwise
            
         '''
-        
-        #YOUR CODE HERE
-        # default implementation (MUST CHANGE)
-        return True
+        return reduce(lambda x, y: x and y, [block.can_move(board, dx, dy) for
+            block in self.blocks])
+
     
     def get_rotation_dir(self):
         ''' Return value: type: int
@@ -308,13 +306,18 @@ class Board():
             
         '''
             
-        #YOUR CODE HERE
-        pass
+        if x < 0 or x >= self.width:
+            return False
+        if y < 0 or y >= self.height:
+            return False
+        if (x, y) in self.grid:
+            return False
+        return True
 
     def add_shape(self, shape):
         ''' Parameter: shape - type:Shape
             
-            add a shape to the grid, i.e.
+            add a shape to the grid, i.e.5ef6932
             add each block to the grid using its
             (x, y) coordinates as a dictionary key
 
@@ -475,6 +478,7 @@ class Tetris():
         if self.current_shape.can_move(self.board, dx, dy):
             self.current_shape.move(dx, dy)
             return True
+        return False
 
     def do_rotate(self):
         ''' Checks if the current_shape can be rotated and
