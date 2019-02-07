@@ -82,8 +82,7 @@ class Shape():
     def get_blocks(self):
         '''returns the list of blocks
         '''
-        #YOUR CODE HERE
-        pass
+        return self.blocks
 
     def draw(self, win):
         ''' Parameter: win - type: CanvasFrame
@@ -325,10 +324,9 @@ class Board():
             get the list of blocks
             
         '''
-        
-        #YOUR CODE HERE
-        pass        
-
+        shape_blocks = shape.get_blocks()
+        for block in shape_blocks:
+            self.grid[(block.x, block.y)] = block
 
     def delete_row(self, y):
         ''' Parameters: y - type:int
@@ -478,6 +476,10 @@ class Tetris():
         if self.current_shape.can_move(self.board, dx, dy):
             self.current_shape.move(dx, dy)
             return True
+        if direction == 'Down':
+            self.board.add_shape(self.current_shape)
+            self.current_shape = self.create_new_shape()
+            self.board.draw_shape(self.current_shape)
         return False
 
     def do_rotate(self):
@@ -507,6 +509,9 @@ class Tetris():
         if self.DIRECTION.get(key):
             # key is one of Left, Right, Down
             self.do_move(key)
+        if key == 'space':
+            while self.do_move('Down'):
+                pass
 
        
 ################################################################
