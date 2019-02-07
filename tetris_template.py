@@ -474,6 +474,10 @@ class Tetris():
         if self.current_shape.can_move(self.board, dx, dy):
             self.current_shape.move(dx, dy)
             return True
+        if direction == 'Down':
+            self.board.add_shape(self.current_shape)
+            self.current_shape = self.create_new_shape()
+            self.board.draw_shape(self.current_shape)
         return False
 
     def do_rotate(self):
@@ -503,6 +507,9 @@ class Tetris():
         if self.DIRECTION.get(key):
             # key is one of Left, Right, Down
             self.do_move(key)
+        if key == 'space':
+            while self.do_move('Down'):
+                pass
 
        
 ################################################################
