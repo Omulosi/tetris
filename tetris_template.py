@@ -428,7 +428,7 @@ class Tetris():
 
         # Draw the current_shape oan the board (take a look at the
         # draw_shape method in the Board class)
-        ####  YOUR CODE HERE ####
+        self.board.draw_shape(self.current_shape)
 
         # For Step 9:  animate the shape!
         ####  YOUR CODE HERE ####
@@ -441,9 +441,11 @@ class Tetris():
              at y = 0 and x = int(self.BOARD_WIDTH/2)
             return the shape
         '''
-        
-        #YOUR CODE HERE
-        pass
+        shape = random.choice(self.SHAPES)
+        x, y = int(self.BOARD_WIDTH / 2), 0
+        center = Point(x, y)
+        return shape(center)
+
     
     def animate_shape(self):
         ''' animate the shape - move down at equal intervals
