@@ -471,9 +471,10 @@ class Tetris():
             return False
 
         '''
-        
-        #YOUR CODE HERE
-        pass
+        dx, dy = self.DIRECTION[direction]
+        if self.current_shape.can_move(self.board, dx, dy):
+            self.current_shape.move(dx, dy)
+            return True
 
     def do_rotate(self):
         ''' Checks if the current_shape can be rotated and
@@ -498,10 +499,11 @@ class Tetris():
                 the shape should rotate.
 
         '''
-            
-        #YOUR CODE HERE
         key = event.keysym
-        print key
+        if self.DIRECTION.get(key):
+            # key is one of Left, Right, Down
+            self.do_move(key)
+
        
 ################################################################
 # Start the game
