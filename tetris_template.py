@@ -82,8 +82,7 @@ class Shape():
     def get_blocks(self):
         '''returns the list of blocks
         '''
-        #YOUR CODE HERE
-        pass
+        return self.blocks
 
     def draw(self, win):
         ''' Parameter: win - type: CanvasFrame
@@ -323,10 +322,9 @@ class Board():
             get the list of blocks
             
         '''
-        
-        #YOUR CODE HERE
-        pass        
-
+        shape_blocks = shape.get_blocks()
+        for block in shape_blocks:
+            self.grid[(block.x, block.y)] = block
 
     def delete_row(self, y):
         ''' Parameters: y - type:int
