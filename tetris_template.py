@@ -40,8 +40,7 @@ class Block(Rectangle):
             Returns True if it can, and False otherwise
             HINT: use the can_move method on the Board object
         '''
-        #YOUR CODE HERE
-        pass
+        return board.can_move(dx, dy)
     
     def move(self, dx, dy):
         ''' Parameters: dx - type: int
@@ -118,10 +117,9 @@ class Shape():
             Returns True if all of them can, and False otherwise
            
         '''
-        
-        #YOUR CODE HERE
-        # default implementation (MUST CHANGE)
-        return True
+        return reduce(lambda x, y: x and y, [block.can_move(board, dx, dy) for
+            block in self.blocks])
+
     
     def get_rotation_dir(self):
         ''' Return value: type: int
@@ -308,8 +306,11 @@ class Board():
             
         '''
             
-        #YOUR CODE HERE
-        pass
+        if x < 0 or x >= self.width:
+            return False
+        if y < 0 or y >= self.height:
+            return False
+        return True
 
     def add_shape(self, shape):
         ''' Parameter: shape - type:Shape
