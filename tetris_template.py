@@ -310,6 +310,8 @@ class Board():
             return False
         if y < 0 or y >= self.height:
             return False
+        if (x, y) in self.grid:
+            return False
         return True
 
     def add_shape(self, shape):
