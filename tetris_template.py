@@ -77,6 +77,7 @@ class Shape():
         for pos in coords:
             self.blocks.append(Block(pos, color))
 
+        self.center_block = None
 
 
     def get_blocks(self):
@@ -141,9 +142,16 @@ class Shape():
                         
             otherwise all is good, return True
         '''
-        
-        #YOUR CODE HERE
-        pass
+        rot_dir = self.get_rotation_dir()
+        # center = self.blocks[1]
+        center = self.center_block
+        can_rotate = True
+        for block in self.blocks:
+            new_x = center.x - rot_dir * center.y + rot_dir * block.y
+            new_y = center.y - rot_dir * center.x + rot_dir * block.x
+            can_rotate = can_rotate and board.can_move(new_x, new_y)
+        return can_rotate
+
 
     def rotate(self, board):
         ''' Parameters: board - type: Board object
@@ -154,9 +162,13 @@ class Shape():
             3. Move the block to the new position
             
         '''    
-
-        ####  YOUR CODE HERE #####
-        pass
+        rot_dir = self.get_rotation_dir()
+        center = self.center_block
+        for block in self.blocks:
+            new_x = center.x - rot_dir * center.y + rot_dir * block.y
+            new_y = center.y - rot_dir * center.x + rot_dir * block.x
+            dx, dy = new_x - block.x, new_y - block.y
+            block.move(dx, dy)
 
         ### This should be at the END of your rotate code. 
         ### DO NOT touch it. Default behavior is that a piece will only shift
@@ -486,9 +498,9 @@ class Tetris():
         ''' Checks if the current_shape can be rotated and
             rotates if it can
         '''
+        if self.current_shape.can_rotate(self.board):
+            self.current_shape.rotate(self.board)
         
-        #YOUR CODE HERE
-        pass
     
     def key_pressed(self, event):
         ''' this function is called when a key is pressed on the keyboard
@@ -512,6 +524,8 @@ class Tetris():
         if key == 'space':
             while self.do_move('Down'):
                 pass
+        if key == 'Up':
+            self.do_rotate()
 
        
 ################################################################
