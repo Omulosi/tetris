@@ -351,10 +351,13 @@ class Board():
             handout
             
         '''
-        
-        #YOUR CODE HERE
-        pass
-    
+        for location in self.grid:
+            if location[1] == y:
+                block = self.grid[location]
+                block.undraw()
+                del self.grid[location]
+
+
     def is_row_complete(self, y):        
         ''' Parameter: y - type: int
             Return value: type: bool
@@ -365,9 +368,12 @@ class Board():
             otherwise return True
             
         '''
+        row_y = zip(range(self.width), [y] * self.width)
+        is_complete = True
+        for block in row_y:
+            is_complete = is_complete and self.grid.get(block)
+        return True
         
-        #YOUR CODE HERE
-        pass
     
     def move_down_rows(self, y_start):
         ''' Parameters: y_start - type:int                        
