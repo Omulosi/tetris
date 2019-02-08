@@ -443,8 +443,8 @@ class Tetris():
         # draw_shape method in the Board class)
         self.board.draw_shape(self.current_shape)
 
-        # For Step 9:  animate the shape!
-        ####  YOUR CODE HERE ####
+        # animate the shape!
+        self.animate_shape()
 
 
     def create_new_shape(self):
