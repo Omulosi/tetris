@@ -351,12 +351,11 @@ class Board():
             handout
             
         '''
-        for location in self.grid:
-            if location[1] == y:
-                block = self.grid[location]
-                block.undraw()
-                del self.grid[location]
-
+        row_y = zip(range(self.width), [y] * self.width)
+        for block_coord in row_y:
+            print('coord: ', block_coord)
+            self.grid[block_coord].undraw()
+            del self.grid[block_coord]
 
     def is_row_complete(self, y):        
         ''' Parameter: y - type: int
@@ -371,8 +370,8 @@ class Board():
         row_y = zip(range(self.width), [y] * self.width)
         is_complete = True
         for block in row_y:
-            is_complete = is_complete and self.grid.get(block)
-        return True
+            is_complete = is_complete and block in self.grid
+        return is_complete 
         
     
     def move_down_rows(self, y_start):
@@ -386,10 +385,16 @@ class Board():
                     and then place it back in the grid in the new position
 
         '''
-        
-        #YOUR CODE HERE
-        pass
-    
+        rows = range(y_start + 1)[::-1]
+        cols = range(self.width)
+        for y in rows:
+            for x in cols:
+                if (x, y) in self.grid:
+                    block = self.grid[(x, y)]
+                    block.move(0, 1)
+                    del self.grid[(x, y)]
+                    self.grid[(block.x, block.y)] = block 
+
     def remove_complete_rows(self):
         ''' removes all the complete rows
             1. for each row, y, 
@@ -399,8 +404,12 @@ class Board():
                     move all rows down starting at row y - 1
 
         '''
-        
-        #YOUR CODE HERE
+        all_rows = range(self.height)
+        for row in all_rows:
+            if self.is_row_complete(row):
+                self.delete_row(row)
+                self.move_down_rows(row - 1)
+
 
     def game_over(self):
         ''' display "Game Over !!!" message in the center of the board
@@ -496,6 +505,7 @@ class Tetris():
             return True
         if direction == 'Down':
             self.board.add_shape(self.current_shape)
+            self.board.remove_complete_rows()
             self.current_shape = self.create_new_shape()
             self.board.draw_shape(self.current_shape)
         return False
